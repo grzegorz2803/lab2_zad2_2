@@ -1,16 +1,14 @@
-import com.sun.source.tree.BreakTree;
-
 import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class TicketPool {
     private static final int MAX_TICKETS = 4;
-    private Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
     ArrayList<Ticket> tickets = new ArrayList<>();
   public TicketPool(){
       for(int i=0;i<MAX_TICKETS;i++){
-          tickets.add(new Ticket("Bilet ",i));
+          tickets.add(new Ticket(i));
       }
   }
   public int reserve(){

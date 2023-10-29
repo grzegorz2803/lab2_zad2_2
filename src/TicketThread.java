@@ -1,7 +1,9 @@
-import java.util.Random;
+
 
 public class TicketThread extends Thread {
-    private TicketPool ticketPool;
+    private final TicketPool ticketPool;
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_WHITE = "\u001B[0m";
 
     public TicketThread(TicketPool ticketPool) {
         this.ticketPool = ticketPool;
@@ -16,7 +18,7 @@ public class TicketThread extends Thread {
                 try{
                     Thread.sleep(2000);
                 }catch (InterruptedException e){
-                    System.out.println("Wątek "+getName()+" został przerwany");
+                    System.out.println(ANSI_RED+"Wątek "+getName()+" został przerwany"+ANSI_WHITE);
                     interrupt();
                     break;
                 }
@@ -26,7 +28,7 @@ public class TicketThread extends Thread {
             try{
                 Thread.sleep(5000);
             }catch (InterruptedException e){
-                System.out.println("Wątek "+getName()+" został przerwany");
+                System.out.println(ANSI_RED+"Wątek "+getName()+" został przerwany"+ANSI_WHITE);
                 interrupt();
                 break;
             }

@@ -1,22 +1,16 @@
 
 public class Ticket {
 
-    private String name;
     private boolean reserved;
-    private int number;
+    private final int number;
 
-    public Ticket(String name, int number) {
+    public Ticket(int number) {
         this.number = number;
-        this.name = name;
         reserved = false;
     }
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public boolean isReserved() {
@@ -27,7 +21,4 @@ public class Ticket {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
 }
