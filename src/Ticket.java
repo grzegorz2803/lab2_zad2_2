@@ -1,14 +1,12 @@
 
-import java.util.Random;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 public class Ticket {
-    private Lock lock = new ReentrantLock();
+
     private String name;
     private boolean reserved;
+    private int number;
 
-    public Ticket(String name) {
+    public Ticket(String name, int number) {
+        this.number = number;
         this.name = name;
         reserved = false;
     }
@@ -25,28 +23,11 @@ public class Ticket {
         return reserved;
     }
 
-    public void reserve() throws InterruptedException {
-
-        if (reserved) {
-            System.out.println("Wątek " + Thread.currentThread().getName() + " czeka na zwolnienie  " + name);
-        } else {
-            lock.lock();
-            try {
-                reserved = true;
-                System.out.println("Wątek " + Thread.currentThread().getName() + " zarezerwował " + name);
-            } finally {
-                if (((ReentrantLock) lock).isHeldByCurrentThread()) {
-                    lock.unlock();
-                }
-
-
-            }
-        }
-
-    }
-    public void returnTicket() throws InterruptedException {
-        reserved = false;
-        System.out.println("Wątek " + Thread.currentThread().getName() + " zwolnił  " + name);
+    public int getNumber() {
+        return number;
     }
 
+    public void setNumber(int number) {
+        this.number = number;
+    }
 }

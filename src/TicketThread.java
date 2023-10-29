@@ -1,32 +1,37 @@
+import java.util.Random;
 
 public class TicketThread extends Thread {
-    Ticket[] tickets;
+    private TicketPool ticketPool;
 
-    public TicketThread(Ticket[] tickets) {
-        this.tickets = tickets;
+    public TicketThread(TicketPool ticketPool) {
+        this.ticketPool = ticketPool;
     }
 
     @Override
     public void run() {
-
-        while (true) {
-            for (Ticket ticket : tickets) {
-
-                try {
-                    ticket.reserve();
-                    ticket.returnTicket();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+        while (!isInterrupted()){
+            int ticketNumber = ticketPool.reserve();
+            if(ticketNumber!=-1){
+                System.out.println("Wątek "+getName()+" zarezerwował bilet nr "+ticketNumber);
+                try{
+                    Thread.sleep(2000);
+                }catch (InterruptedException e){
+                    System.out.println("Wątek "+getName()+" został przerwany");
+                    interrupt();
+                    break;
                 }
-
-                if (Thread.currentThread().isInterrupted()) {
-                    System.out.println("Wątek " + Thread.currentThread().getName() + " został przerwany");
-                    return;
-                }
-
+                System.out.println("Wątek "+getName()+" zwolnił bilet nr" +ticketNumber);
+                ticketPool.release(ticketNumber);
             }
-
+            try{
+                Thread.sleep(5000);
+            }catch (InterruptedException e){
+                System.out.println("Wątek "+getName()+" został przerwany");
+                interrupt();
+                break;
+            }
         }
+
     }
 }
 
